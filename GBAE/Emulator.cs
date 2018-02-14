@@ -19,6 +19,10 @@ namespace GBAE
             ROM.LoadROM(System.IO.File.ReadAllBytes("Advanced Wars  # GBA.GBA"));
             ROM.ParseROM();
             ROM.DumpInfo();
+            ROM.VerifyChecksum();
+            Console.WriteLine(ROM.VerifyMagic());
+            int i = ROM.FindPattern(Encoding.ASCII.GetBytes("FLASH_V"));
+            Console.WriteLine("A{0}",i.ToString());
         }
     }
 }
