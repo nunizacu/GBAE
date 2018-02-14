@@ -12,9 +12,17 @@ namespace GBAE
 {
     public partial class Form1 : Form
     {
+        private Emulator e;
         public Form1()
         {
             InitializeComponent();
+            e = new Emulator();
+            StartButton.Click += new EventHandler(StartClick);
+        }
+
+        private void StartClick(Object sender, EventArgs ea)
+        {
+            e.LoadRom();
         }
     }
 }

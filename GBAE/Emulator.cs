@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,15 +15,28 @@ namespace GBAE
             ROM = new ROM();
         }
 
+        [Conditional("DEBUG")]
+        public static void Log(string msg, params object[] p)
+        {
+            Console.WriteLine(msg, p);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Log(string msg)
+        {
+            Console.WriteLine(msg);
+        }
+
         public void LoadRom()
         {
             ROM.LoadROM(System.IO.File.ReadAllBytes("Advanced Wars  # GBA.GBA"));
             ROM.ParseROM();
             ROM.DumpInfo();
             ROM.VerifyChecksum();
-            Console.WriteLine(ROM.VerifyMagic());
-            int i = ROM.FindPattern(Encoding.ASCII.GetBytes("FLASH_V"));
-            Console.WriteLine("A{0}",i.ToString());
+            Log(ROM.VerifyMagic().ToString());
+            //int i = ROM.FindPattern(Encoding.ASCII.GetBytes("FLASH_V"));
+            ROM.BackupType t = ROM.CheckBackup();
+            Log("BACKUP: {0:X}",ROM.BackupToString(t));
         }
     }
 }

@@ -15,11 +15,28 @@ namespace GBAE
         private String _GameTitle;
         private String _GameCode;
         private String _MakerCode;
-        private Byte _FixedValue; // 96h
         private Byte _MainUnitCode;
         private Byte _DeviceType;
         private Byte _SoftwareVersion;
         private Byte _ComplementCheck;
+        public enum BackupType
+        {
+            EEPROM = 0, SRAM = 1, Flash = 2, Flash512 = 3, Flash1m = 4, None = -1
+        }
+        private String[] _BackupMap =
+        {
+            "EEPROM_V",
+            "SRAM_V",
+            "FLASH_V",
+            "FLASH512_V",
+            "FLASH1M_V"
+        };
+
+  //      public struct Backup
+        //{
+//            public ToString()
+
+        //}
 
         public ROM()
         { }
@@ -30,17 +47,33 @@ namespace GBAE
             Array.Copy(pROM, _Data, pROM.Length);
         }
 
+        public BackupType CheckBackup()
+        {
+            //string[] backupTypes = Enum.GetNames(Backup);
+            for(int i = 0; i < _BackupMap.Length; i++)
+            {
+                if (-1 != FindPattern(Encoding.ASCII.GetBytes(_BackupMap[i])))
+                    return (BackupType)i;
+            }
+            return (BackupType) (-1);
+        }
+
+        public string BackupToString(BackupType type)
+        {
+            return Enum.GetName(typeof(BackupType), type);
+        }
+
         public void DumpInfo()
         {
-            Console.WriteLine("Size  : {0} bytes", _Data.Length);
-            Console.WriteLine("CHKSM : {0} {1}", _ComplementCheck, CalculateChecksum());
-            Console.WriteLine("Entry : {0:X}h", _EntryPoint);
-            Console.WriteLine("Title : {0}", _GameTitle);
-            Console.WriteLine("Code  : {0}", _GameCode);
-            Console.WriteLine("Maker : {0}", _MakerCode);
-            Console.WriteLine("MUC   : {0}", _MainUnitCode);
-            Console.WriteLine("Device: {0}", _DeviceType);
-            Console.WriteLine("SftVer: {0}", _SoftwareVersion);
+            Emulator.Log("Size  : {0} bytes", _Data.Length);
+            Emulator.Log("CHKSM : {0} {1}", _ComplementCheck, CalculateChecksum());
+            Emulator.Log("Entry : {0:X}h", _EntryPoint);
+            Emulator.Log("Title : {0}", _GameTitle);
+            Emulator.Log("Code  : {0}", _GameCode);
+            Emulator.Log("Maker : {0}", _MakerCode);
+            Emulator.Log("MUC   : {0}", _MainUnitCode);
+            Emulator.Log("Device: {0}", _DeviceType);
+            Emulator.Log("SftVer: {0}", _SoftwareVersion);
         }
 
         public void ParseROM()
@@ -55,6 +88,7 @@ namespace GBAE
             _ComplementCheck = _Data[0xBD];
         }
 
+        
         public void VerifyChecksum()
         {
             if(CalculateChecksum()==_ComplementCheck)
@@ -81,17 +115,10 @@ namespace GBAE
 
         public int FindPattern(byte[] pattern)
         {
-            Console.WriteLine("SEARCHING");
             for (int i = 0; i < _Data.Length; i++)
             {
-                if (_Data.Skip(i).Take(pattern.Length).SequenceEqual(pattern))
-                {
-                    Console.WriteLine("FOUND");
-                    return i;
-                    
-                }
+                if (CompareRange(pattern,i,pattern.Length)) return i;
             }
-            Console.WriteLine("NOT FOUND");
             return -1;
 
         }
@@ -112,7 +139,6 @@ namespace GBAE
             StringBuilder sb = new StringBuilder();
             for (int i=0; i < Length; i++)
             {
-                //Console.Write(_Data[Offset]);
                 sb.Append(Convert.ToChar(_Data[Offset+i]), 1);
             }
             return sb.ToString();
@@ -123,6 +149,15 @@ namespace GBAE
             for(int i=0; i < length; i++)
             {
                 if (_Data[offset + i] != expectedValue) return false;
+            }
+            return true;
+        }
+
+        private bool CompareRange(byte[] pattern, int offset, int length)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                if (_Data[offset + i] != pattern[i]) return false;
             }
             return true;
         }
