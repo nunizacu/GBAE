@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-//using System.Reflection
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +19,12 @@ namespace GBAE
 
         public enum Types { High, HighRanged, HighAndLow }
         public Types Type;
-        public OPCode(string pName, byte pHigh)
+        public OPCode(string pName)
         {
             Type = Types.High;
             Name = pName;
-            High = pHigh;
+            //High = pHigh;
+            //Low = pLow;
         }
         public OPCode(string pName, byte pHighStart, byte pHighEnd)
         {
@@ -46,7 +46,7 @@ namespace GBAE
         private OPCodeHandler[] OPCodeHandlers;
         public CPU() { }
 
-        //[OPCode(Name="B", High=0xa0)]
+        [OPCode("B", High=0xa0)]
         private void B()
         {
             Emulator.Log("B");

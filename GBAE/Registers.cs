@@ -5,11 +5,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Collections;
 
 namespace GBAE
 {
+    public class CPSR
+    {
+        private UInt32 _data;
+        public enum Flag : UInt32
+        {
+            Sign = 0x80000000, Zero = 0x40000000, Carry = 0x20000000, Overflow = 0x10000000,
+            StickyOverflow = 0x8000000, IRQDisable = 0x80, FIQDisable = 0x40, State = 0x20,
+            Mode4 = 0x10, Mode3 = 0x8, Mode2 = 0x4, Mode1 = 0x2, Mode0 = 0x1
+        };
+
+        public CPSR()
+        {
+            _data = 0;
+        }
+
+        public bool this[Flag f]
+        {
+            get
+            {
+                return (_data & (UInt32)f)>0;
+            }
+
+            set
+            {
+                _data = value ? _data |= (UInt32)f: _data &= ~(UInt32)f;
+            }
+        }
+
+        public void Dump()
+        {
+            
+            foreach (Tuple<String,UInt32> flag in Enum.GetNames(typeof(Flag)).Zip((UInt32[])(Enum.GetValues(typeof(Flag))), Tuple.Create))
+            {
+                Emulator.Log("{0}:{1}", flag.Item1, this[(Flag)flag.Item2]);
+            }
+        }
+    }
+
     class Registers
     {
+
         private UInt32 _CPSR;
         private UInt32 _SPSR_FIQ, _SPSR_SVC, _SPSR_ABT, _SPSR_IRQ, _SPSR_UND;
         private GCHandle[] _R, _R_FIQ, _R_SVC, _R_ABT, _R_IRQ, _R_UND;
