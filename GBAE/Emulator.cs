@@ -37,6 +37,18 @@ namespace GBAE
             Console.WriteLine(msg);
         }
 
+        [Conditional("DEBUG")]
+        public static void LogNoNL(string msg)
+        {
+            Console.Write(msg);
+        }
+
+        [Conditional("DEBUG")]
+        public static void LogNoNL(string msg, params object[] p)
+        {
+            Console.Write(msg, p);
+        }
+
         public void LoadRom()
         {
             ROM.LoadROM(System.IO.File.ReadAllBytes("Advanced Wars  # GBA.GBA"));
@@ -51,6 +63,16 @@ namespace GBAE
             //CPU.DecodeARM(0xea00002e);
             CPU.AddHandlers();
             Registers r = new Registers();
+            //r.DumpRegs();
+            r[13] = 16;
+            r.DumpRegs();
+            r.SwitchABT();
+            r[13] = 32;
+            r.DumpRegs();
+            r.SwitchUSR();
+            r.DumpRegs();
+            r.SwitchABT();
+            r.DumpRegs();
         }
     }
 }
