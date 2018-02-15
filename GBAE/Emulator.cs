@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 
 namespace GBAE
 {
+    public static class ByteExtension
+    {
+        public static string ToBinary(this byte b)
+        {
+            return Convert.ToString(b, 2);
+        }
+    }
+
     class Emulator
     {
         ROM ROM;
+        CPU CPU;
         public Emulator()
         {
             ROM = new ROM();
+            CPU = new CPU();
         }
 
         [Conditional("DEBUG")]
@@ -37,6 +47,10 @@ namespace GBAE
             //int i = ROM.FindPattern(Encoding.ASCII.GetBytes("FLASH_V"));
             ROM.BackupType t = ROM.CheckBackup();
             Log("BACKUP: {0:X}",ROM.BackupToString(t));
+            //CPU.DecodeARM(0x2e0000ea);
+            //CPU.DecodeARM(0xea00002e);
+            CPU.AddHandlers();
+            Registers r = new Registers();
         }
     }
 }
