@@ -25,18 +25,8 @@ namespace GBAE
         }
         private String[] _BackupMap =
         {
-            "EEPROM_V",
-            "SRAM_V",
-            "FLASH_V",
-            "FLASH512_V",
-            "FLASH1M_V"
+            "EEPROM_V", "SRAM_V", "FLASH_V", "FLASH512_V", "FLASH1M_V", "NONE"
         };
-
-  //      public struct Backup
-        //{
-//            public ToString()
-
-        //}
 
         public ROM()
         { }
@@ -106,11 +96,6 @@ namespace GBAE
             if (!CompareRange(0, 0xBE, 2)) return false;
             if (!CompareRange(0, 0xB5, 7)) return false;
             return true;
-        }
-
-        public int CheckFlashOldID()
-        {
-            return 0;
         }
 
         public int FindPattern(byte[] pattern)
