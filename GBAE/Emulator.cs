@@ -75,6 +75,7 @@ namespace GBAE
             r.DumpRegs();
             CPSR c = new CPSR();
             c[CPSR.Flag.Carry] = true;
+            c[CPSR.Flag.User] = true;
             c.Dump();
         }
     }

@@ -9,49 +9,12 @@ using System.Collections;
 
 namespace GBAE
 {
-    public class CPSR
-    {
-        private UInt32 _data;
-        public enum Flag : UInt32
-        {
-            Sign = 0x80000000, Zero = 0x40000000, Carry = 0x20000000, Overflow = 0x10000000,
-            StickyOverflow = 0x8000000, IRQDisable = 0x80, FIQDisable = 0x40, State = 0x20,
-            Mode4 = 0x10, Mode3 = 0x8, Mode2 = 0x4, Mode1 = 0x2, Mode0 = 0x1
-        };
-
-        public CPSR()
-        {
-            _data = 0;
-        }
-
-        public bool this[Flag f]
-        {
-            get
-            {
-                return (_data & (UInt32)f)>0;
-            }
-
-            set
-            {
-                _data = value ? _data |= (UInt32)f: _data &= ~(UInt32)f;
-            }
-        }
-
-        public void Dump()
-        {
-            
-            foreach (Tuple<String,UInt32> flag in Enum.GetNames(typeof(Flag)).Zip((UInt32[])(Enum.GetValues(typeof(Flag))), Tuple.Create))
-            {
-                Emulator.Log("{0}:{1}", flag.Item1, this[(Flag)flag.Item2]);
-            }
-        }
-    }
 
     class Registers
     {
 
-        private UInt32 _CPSR;
-        private UInt32 _SPSR_FIQ, _SPSR_SVC, _SPSR_ABT, _SPSR_IRQ, _SPSR_UND;
+        private CPSR _CPSR;
+        private CPSR _SPSR_FIQ, _SPSR_SVC, _SPSR_ABT, _SPSR_IRQ, _SPSR_UND;
         private GCHandle[] _R, _R_FIQ, _R_SVC, _R_ABT, _R_IRQ, _R_UND;
         private unsafe UInt32*[] _MappedR;
 
@@ -68,6 +31,7 @@ namespace GBAE
             AllocRegisters(ref _R_IRQ, 2, 4);
             AllocRegisters(ref _R_UND, 2, 5);
             CreateMap();
+            _CPSR = new CPSR();
             //DumpRegs();
             //SwitchFIQ();
             //SwitchIRQ();
@@ -155,5 +119,22 @@ namespace GBAE
             set { *_MappedR[R] = value;}
         }
 
+        public unsafe UInt32 SP
+        {
+            get { return *_MappedR[13]; }
+            set { *_MappedR[13] = value;}
+        }
+
+        public unsafe UInt32 LR
+        {
+            get { return *_MappedR[14]; }
+            set { *_MappedR[14] = value;}
+        }
+
+        public unsafe UInt32 PC
+        {
+            get { return *_MappedR[15]; }
+            set { *_MappedR[15] = value;}
+        }
     }
 }
