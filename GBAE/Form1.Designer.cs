@@ -31,11 +31,7 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.smnuNewFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.openFD = new System.Windows.Forms.OpenFileDialog();
@@ -65,10 +61,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuNew,
             this.mnuOpen,
-            this.mnuSave,
-            this.mnuLoad,
             this.toolStripMenuItem1,
             this.mnuQuit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -76,39 +69,12 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // mnuNew
-            // 
-            this.mnuNew.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.smnuNewFile});
-            this.mnuNew.Name = "mnuNew";
-            this.mnuNew.Size = new System.Drawing.Size(172, 22);
-            this.mnuNew.Text = "New";
-            // 
-            // smnuNewFile
-            // 
-            this.smnuNewFile.Name = "smnuNewFile";
-            this.smnuNewFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.smnuNewFile.Size = new System.Drawing.Size(162, 22);
-            this.smnuNewFile.Text = "New File";
-            // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
             this.mnuOpen.Size = new System.Drawing.Size(172, 22);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
-            // 
-            // mnuSave
-            // 
-            this.mnuSave.Name = "mnuSave";
-            this.mnuSave.Size = new System.Drawing.Size(172, 22);
-            this.mnuSave.Text = "Save";
-            // 
-            // mnuLoad
-            // 
-            this.mnuLoad.Name = "mnuLoad";
-            this.mnuLoad.Size = new System.Drawing.Size(172, 22);
-            this.mnuLoad.Text = "Load";
             // 
             // toolStripMenuItem1
             // 
@@ -151,11 +117,7 @@
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mnuNew;
         private System.Windows.Forms.ToolStripMenuItem mnuOpen;
-        private System.Windows.Forms.ToolStripMenuItem smnuNewFile;
-        private System.Windows.Forms.ToolStripMenuItem mnuSave;
-        private System.Windows.Forms.ToolStripMenuItem mnuLoad;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuQuit;
         private System.Windows.Forms.OpenFileDialog openFD;

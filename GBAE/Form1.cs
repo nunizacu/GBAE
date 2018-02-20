@@ -13,6 +13,7 @@ namespace GBAE
     public partial class Form1 : Form
     {
         private Emulator e;
+        string _chosenFile = "";
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +33,6 @@ namespace GBAE
 
         private void mnuOpen_Click(object sender, EventArgs e)
         {
-            string Chosen_File = "";
 
             openFD.Title = "Insert rom";
             openFD.FileName = "";
@@ -40,7 +40,7 @@ namespace GBAE
 
             openFD.ShowDialog();
 
-            Chosen_File = openFD.FileName;
+            _chosenFile = openFD.FileName;
 
         }
     }
