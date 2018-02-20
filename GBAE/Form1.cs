@@ -13,6 +13,8 @@ namespace GBAE
     public partial class Form1 : Form
     {
         private Emulator e;
+        private String _romFileName;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +24,7 @@ namespace GBAE
 
         private void StartClick(Object sender, EventArgs ea)
         {
-            e.LoadRom();
+            e.LoadRom(_romFileName);
         }
 
         private void mnuQuit_Click(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace GBAE
 
             openFD.ShowDialog();
 
-            Chosen_File = openFD.FileName;
+            _romFileName = openFD.FileName;
 
         }
     }

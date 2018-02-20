@@ -49,9 +49,9 @@ namespace GBAE
             Console.Write(msg, p);
         }
 
-        public void LoadRom()
+        public void LoadRom(String pFileName)
         {
-            ROM.LoadROM(System.IO.File.ReadAllBytes("Advanced Wars  # GBA.GBA"));
+            ROM.LoadROM(System.IO.File.ReadAllBytes(pFileName));
             ROM.ParseROM();
             ROM.DumpInfo();
             ROM.VerifyChecksum();
@@ -64,19 +64,24 @@ namespace GBAE
             CPU.AddHandlers();
             Registers r = new Registers();
             //r.DumpRegs();
-            r[13] = 16;
-            r.DumpRegs();
-            r.SwitchABT();
-            r[13] = 32;
-            r.DumpRegs();
-            r.SwitchUSR();
-            r.DumpRegs();
-            r.SwitchABT();
-            r.DumpRegs();
-            CPSR c = new CPSR();
-            c[CPSR.Flag.Carry] = true;
-            c[CPSR.Flag.User] = true;
-            c.Dump();
+            //r[13] = 16;
+            //r.DumpRegs();
+            //r.SwitchABT();
+            //r[13] = 32;
+            //r.DumpRegs();
+            //r.SwitchUSR();
+            //r.DumpRegs();
+            //r.SwitchABT();
+            //r.DumpRegs();
+            //CPSR c = new CPSR();
+            //c[CPSR.Flag.Carry] = true;
+            //c[CPSR.Flag.User] = true;
+            //c.Dump();
+            //CPU.DecodeCondition(0x2);
+            CPU.DecodeARM(0x2e0000ea);
+            CPU.DecodeARM(0xea00002e);
+            CPU.DecodeARM(0x0a82843d);
+            CPU.DecodeARM(0x3d84820a);
         }
     }
 }

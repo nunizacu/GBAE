@@ -15,15 +15,16 @@ namespace GBAE
 
         private CPSR _CPSR;
         private CPSR _SPSR_FIQ, _SPSR_SVC, _SPSR_ABT, _SPSR_IRQ, _SPSR_UND;
+        private CPSR[] _SPSR;
         private GCHandle[] _R, _R_FIQ, _R_SVC, _R_ABT, _R_IRQ, _R_UND;
         private unsafe UInt32*[] _MappedR;
+        public enum Mode { User=0, FIQ=2, Supervisor=3, Abort=4, IRQ=5, Undefined=6};
 
         public unsafe Registers()
         {
-            //AllocUserRegisters();
-            //_R = new GCHandle[16];
-            //_R_FIQ = new GCHandle[8];
             _MappedR = new UInt32*[16];
+            _CPSR = new CPSR();
+            _SPSR = new CPSR[7];
             AllocRegisters(ref _R, 16, 0);
             AllocRegisters(ref _R_FIQ, 8, 1);
             AllocRegisters(ref _R_SVC, 2, 2);
@@ -31,11 +32,6 @@ namespace GBAE
             AllocRegisters(ref _R_IRQ, 2, 4);
             AllocRegisters(ref _R_UND, 2, 5);
             CreateMap();
-            _CPSR = new CPSR();
-            //DumpRegs();
-            //SwitchFIQ();
-            //SwitchIRQ();
-            //DumpRegs();
         }
 
         private void AllocRegister(ref GCHandle pReg, int val=0)
@@ -69,6 +65,31 @@ namespace GBAE
             Emulator.LogNoNL(Environment.NewLine);
         }
 
+        public void SaveCPSR(Mode m)
+        {
+            if(m!=Mode.User)
+                _SPSR[(int)m] = (CPSR) _CPSR.Clone();
+        }
+
+        public void RestoreCPSR(Mode m)
+        {
+            _CPSR = (CPSR)_SPSR[(int)m].Clone();
+        }
+/*
+        public void SwitchMode(Mode m)
+        {
+            switch (m)
+            {
+                case Mode.FIQ:
+
+                    break;
+                
+
+
+            }
+        }
+*/
+
         public void SwitchUSR()
         {
             Switch(ref _R, 0, 16);
@@ -101,7 +122,7 @@ namespace GBAE
 
         private unsafe void SwitchWithReset(ref GCHandle[] target, int offset, int count)
         {
-            Switch(ref _R, 8, 8);
+            Switch(ref _R, 8, 7);
             Switch(ref target, offset, count);
         }
 
