@@ -19,6 +19,7 @@ namespace GBAE
         {
             InitializeComponent();
             em = new Emulator();
+
         }
 
 
