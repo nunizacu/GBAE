@@ -37,7 +37,8 @@ namespace GBAE
             openFD.ShowDialog();
 
             _romFileName = openFD.FileName;
-            em.LoadRom(_romFileName);
+            if(_romFileName != "")
+                em.LoadRom(_romFileName);
         }
     }
 }
