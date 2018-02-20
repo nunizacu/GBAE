@@ -19,7 +19,7 @@ namespace GBAE
         {
             InitializeComponent();
             e = new Emulator();
-            StartButton.Click += new EventHandler(StartClick);
+            Start.Click += new EventHandler(StartClick);
         }
 
         private void StartClick(Object sender, EventArgs ea)
