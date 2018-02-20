@@ -49,9 +49,9 @@ namespace GBAE
             Console.Write(msg, p);
         }
 
-        public void LoadRom()
+        public void LoadRom(string fileName)
         {
-            ROM.LoadROM(System.IO.File.ReadAllBytes("Advanced Wars  # GBA.GBA"));
+            ROM.LoadROM(System.IO.File.ReadAllBytes(fileName));
             ROM.ParseROM();
             ROM.DumpInfo();
             ROM.VerifyChecksum();

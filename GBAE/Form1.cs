@@ -12,19 +12,14 @@ namespace GBAE
 {
     public partial class Form1 : Form
     {
-        private Emulator e;
+        private Emulator em;
         string _chosenFile = "";
         public Form1()
         {
             InitializeComponent();
-            e = new Emulator();
-            StartButton.Click += new EventHandler(StartClick);
+            em = new Emulator();
         }
 
-        private void StartClick(Object sender, EventArgs ea)
-        {
-            e.LoadRom();
-        }
 
         private void mnuQuit_Click(object sender, EventArgs e)
         {
@@ -41,6 +36,7 @@ namespace GBAE
             openFD.ShowDialog();
 
             _chosenFile = openFD.FileName;
+            em.LoadRom(_chosenFile);
 
         }
     }
