@@ -38,12 +38,29 @@ namespace GBAE
             Type =  Types.HighRanged;
         }
     }
-
+    /*  Code Suffix Flags         Meaning
+  0:   EQ     Z=1           equal (zero) (same)
+  1:   NE     Z=0           not equal (nonzero) (not same)
+  2:   CS/HS  C=1           unsigned higher or same (carry set)
+  3:   CC/LO  C=0           unsigned lower (carry cleared)
+  4:   MI     N=1           negative (minus)
+  5:   PL     N=0           positive or zero (plus)
+  6:   VS     V=1           overflow (V set)
+  7:   VC     V=0           no overflow (V cleared)
+  8:   HI     C=1 and Z=0   unsigned higher
+  9:   LS     C=0 or Z=1    unsigned lower or same
+  A:   GE     N=V           greater or equal
+  B:   LT     N<>V          less than
+  C:   GT     Z=0 and N=V   greater than
+  D:   LE     Z=1 or N<>V   less or equal
+  E:   AL     -             always (the "AL" suffix can be omitted)
+  F:   NV     -             never (ARMv1,v2 only) (Reserved ARMv3 and up)*/
 
     class CPU
     {
         private delegate void OPCodeHandler();
         private OPCodeHandler[] OPCodeHandlers;
+        public enum Condition : Byte { EQ, NE, CSHS, CCLO, MI, PL, VS, VC, HI, LS, GE, LT, GT, LE, AL, NV }
         public CPU() { }
 
         [OPCode("B", High=0xa0)]
@@ -54,14 +71,26 @@ namespace GBAE
 
         public void DecodeARM(UInt32 op)
         {
+            // bits 27-31
+            byte Cond = (byte)((op & 0xFF000000) >> 31);
+
             // bits 20-27
-            byte a = (byte)((op & 0xFF00000) >>20);
+            byte High = (byte)((op & 0xFF00000) >>20);
             // bits 4-7
-            byte b = (byte)((op & 0x1E000000) >> 3);
-            Emulator.Log("OP[{0:X}] BIN[{1}] HEX[{2:X}]", op, a.ToBinary(), a);
+            byte Low = (byte)((op & 0x1E000000) >> 3);
+            // bits 0-23
+            Int32 Offset = (Int32)(op & 0x00FFFFFF);
+            Offset = Offset & ~0x800000;
+            Offset *= 4;
+            Emulator.Log("OP[{0:X}] HIGH[{1:X}] LOW[{2:X}] COND[{3:X}] OFFSET[{4:X}]", op, High, Low, Cond, Offset);
             OPCodeHandlers = new OPCodeHandler[255];
             OPCodeHandlers[0] = this.B;
             OPCodeHandlers[0]();
+        }
+
+        public void DecodeCondition(byte condition)
+        {
+            Emulator.Log(((Condition)condition).ToString());
         }
 
         public void AddHandlers()

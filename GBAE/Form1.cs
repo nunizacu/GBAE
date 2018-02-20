@@ -12,14 +12,20 @@ namespace GBAE
 {
     public partial class Form1 : Form
     {
-        private Emulator em;
-        string _chosenFile = "";
+        private Emulator e;
+        private String _romFileName;
+
         public Form1()
         {
             InitializeComponent();
-            em = new Emulator();
+            e = new Emulator();
+            StartButton.Click += new EventHandler(StartClick);
         }
 
+        private void StartClick(Object sender, EventArgs ea)
+        {
+            e.LoadRom(_romFileName);
+        }
 
         private void mnuQuit_Click(object sender, EventArgs e)
         {
@@ -28,6 +34,7 @@ namespace GBAE
 
         private void mnuOpen_Click(object sender, EventArgs e)
         {
+            string Chosen_File = "";
 
             openFD.Title = "Insert rom";
             openFD.FileName = "";
@@ -35,8 +42,7 @@ namespace GBAE
 
             openFD.ShowDialog();
 
-            _chosenFile = openFD.FileName;
-            em.LoadRom(_chosenFile);
+            _romFileName = openFD.FileName;
 
         }
     }
