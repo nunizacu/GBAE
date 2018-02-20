@@ -24,5 +24,24 @@ namespace GBAE
         {
             e.LoadRom();
         }
+
+        private void mnuQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void mnuOpen_Click(object sender, EventArgs e)
+        {
+            string Chosen_File = "";
+
+            openFD.Title = "Insert rom";
+            openFD.FileName = "";
+            openFD.Filter = "GameBoy Advance|*.GBA|All Files|*.*";
+
+            openFD.ShowDialog();
+
+            Chosen_File = openFD.FileName;
+
+        }
     }
 }
