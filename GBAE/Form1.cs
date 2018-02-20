@@ -12,20 +12,15 @@ namespace GBAE
 {
     public partial class Form1 : Form
     {
-        private Emulator e;
+        private Emulator em;
         private String _romFileName;
 
         public Form1()
         {
             InitializeComponent();
-            e = new Emulator();
-            Start.Click += new EventHandler(StartClick);
+            em = new Emulator();
         }
 
-        private void StartClick(Object sender, EventArgs ea)
-        {
-            e.LoadRom(_romFileName);
-        }
 
         private void mnuQuit_Click(object sender, EventArgs e)
         {
@@ -34,8 +29,6 @@ namespace GBAE
 
         private void mnuOpen_Click(object sender, EventArgs e)
         {
-            string Chosen_File = "";
-
             openFD.Title = "Insert rom";
             openFD.FileName = "";
             openFD.Filter = "GameBoy Advance|*.GBA|All Files|*.*";
@@ -43,7 +36,7 @@ namespace GBAE
             openFD.ShowDialog();
 
             _romFileName = openFD.FileName;
-
+            em.LoadRom(_romFileName);
         }
     }
 }
