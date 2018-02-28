@@ -30,11 +30,11 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Start = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.openFD = new System.Windows.Forms.OpenFileDialog();
-            this.Start = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +62,12 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // Start
+            // 
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(243, 30);
+            this.Start.Text = "Start";
+            // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
@@ -86,12 +92,6 @@
             // openFD
             // 
             this.openFD.FileName = "openFileDialog1";
-            // 
-            // Start
-            // 
-            this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(243, 30);
-            this.Start.Text = "Start";
             // 
             // Form1
             // 

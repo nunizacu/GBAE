@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,13 +14,13 @@ namespace GBAE
 {
     public partial class Form1 : Form
     {
-        private Emulator em;
         private String _romFileName;
 
         public Form1()
         {
+            
             InitializeComponent();
-            em = new Emulator();
+            Emulator.LoadRom(@"C:\Advanced Wars  # GBA.GBA");
 
         }
 
@@ -37,8 +39,9 @@ namespace GBAE
             openFD.ShowDialog();
 
             _romFileName = openFD.FileName;
-            if(_romFileName != "")
-                em.LoadRom(_romFileName);
+            //if(_romFileName != "")
+            //    em.LoadRom(_romFileName);
+            //em.LoadRom(@"C:\Advanced Wars  # GBA.GBA");
         }
     }
 }

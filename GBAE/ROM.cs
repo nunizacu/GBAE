@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GBAE
 {
-    class ROM
+    public class Rom
     {
         private Byte[] _Data;
 
@@ -28,7 +28,7 @@ namespace GBAE
             "EEPROM_V", "SRAM_V", "FLASH_V", "FLASH512_V", "FLASH1M_V", "NONE"
         };
 
-        public ROM()
+        public Rom()
         { }
 
         public void LoadROM(byte[] pROM)

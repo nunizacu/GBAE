@@ -10,7 +10,7 @@ using System.Collections;
 namespace GBAE
 {
 
-    class Registers
+    public class Registers
     {
 
         private CPSR _CPSR;
